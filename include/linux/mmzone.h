@@ -418,6 +418,9 @@ enum zone_type {
 #ifdef CONFIG_ZONE_DEVICE
 	ZONE_DEVICE,
 #endif
+#ifdef CONFIG_ENERGY_EFFICIENT_MEMORY
+	ZONE_COLD,
+#endif
 	__MAX_NR_ZONES
 
 };

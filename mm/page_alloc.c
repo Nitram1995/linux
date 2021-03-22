@@ -276,6 +276,9 @@ int sysctl_lowmem_reserve_ratio[MAX_NR_ZONES] = {
 	[ZONE_HIGHMEM] = 0,
 #endif
 	[ZONE_MOVABLE] = 0,
+#ifdef CONFIG_ENERGY_EFFICIENT_MEMORY
+	[ZONE_COLD] = 32,
+#endif
 };
 
 static char * const zone_names[MAX_NR_ZONES] = {
@@ -292,6 +295,9 @@ static char * const zone_names[MAX_NR_ZONES] = {
 	 "Movable",
 #ifdef CONFIG_ZONE_DEVICE
 	 "Device",
+#endif
+#ifdef CONFIG_ENERGY_EFFICIENT_MEMORY
+	 "Cold",
 #endif
 };
 

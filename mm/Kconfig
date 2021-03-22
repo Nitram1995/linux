@@ -875,4 +875,10 @@ config MAPPING_DIRTY_HELPERS
 config KMAP_LOCAL
 	bool
 
+config ENERGY_EFFICIENT_MEMORY
+    bool "Select to get energy efficiency"
+    default y
+    help
+      Save energy
+
 endmenu

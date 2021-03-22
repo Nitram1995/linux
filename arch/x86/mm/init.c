@@ -1000,9 +1000,20 @@ void __init zone_sizes_init(void)
 #ifdef CONFIG_ZONE_DMA32
 	max_zone_pfns[ZONE_DMA32]	= min(MAX_DMA32_PFN, max_low_pfn);
 #endif
+
+/* TODO: Incorporate more clean
+	Currently locates remaining memory after zone normal as cold zone */
+#ifdef CONFIG_ENERGY_EFFICIENT_MEMORY
+	max_zone_pfns[ZONE_NORMAL] 	= min(MAX_NORMAL_PFN, max_low_pfn);
+	#ifdef CONFIG_HIGHMEM
+		max_zone_pfns[ZONE_HIGHMEM]	= max_zone_pfns[ZONE_NORMAL]
+	#endif
+	max_zone_pfns[ZONE_COLD] 	= max_low_pfn;
+#else
 	max_zone_pfns[ZONE_NORMAL]	= max_low_pfn;
-#ifdef CONFIG_HIGHMEM
-	max_zone_pfns[ZONE_HIGHMEM]	= max_pfn;
+	#ifdef CONFIG_HIGHMEM
+		max_zone_pfns[ZONE_HIGHMEM]	= max_pfn;
+	#endif
 #endif
 
 	free_area_init(max_zone_pfns);

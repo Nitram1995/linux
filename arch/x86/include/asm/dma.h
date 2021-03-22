@@ -84,6 +84,11 @@
 #define MAX_DMA_ADDRESS ((unsigned long)__va(MAX_DMA_PFN << PAGE_SHIFT))
 #endif
 
+/* Zone for frozen page */
+#ifdef CONFIG_ENERGY_EFFICIENT_MEMORY
+#define MAX_NORMAL_PFN ((1UL << (32 - PAGE_SHIFT)) + MAX_DMA32_PFN)
+#endif
+
 /* 8237 DMA controllers */
 #define IO_DMA1_BASE	0x00	/* 8 bit slave DMA, channels 0..3 */
 #define IO_DMA2_BASE	0xC0	/* 16 bit master DMA, ch 4(=slave input)..7 */
