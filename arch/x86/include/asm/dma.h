@@ -86,7 +86,8 @@
 
 /* Zone for frozen page */
 #ifdef CONFIG_ENERGY_EFFICIENT_MEMORY
-#define MAX_NORMAL_PFN ((1UL << (32 - PAGE_SHIFT)) + MAX_DMA32_PFN)
+/* TODO EEL: Make an option during compilation to change size of Nomral zone */
+#define MAX_NORMAL_PFN ((1UL << (34 - PAGE_SHIFT)))
 #endif
 
 /* 8237 DMA controllers */

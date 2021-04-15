@@ -18,6 +18,19 @@
 
 struct mm_struct;
 
+#ifdef CONFIG_ENERGY_EFFICIENT_MEMORY
+/*
+ * Optimisation macro.  It is equivalent to:
+ *      (x & bit1) ? bit2 : 0
+ * but this version is faster.
+ * ("bit1" and "bit2" must be single bits)
+ */
+#define _calc_vm_trans(x, bit1, bit2) \
+  ((!(bit1) || !(bit2)) ? 0 : \
+  ((bit1) <= (bit2) ? ((x) & (bit1)) * ((bit2) / (bit1)) \
+   : ((x) & (bit1)) / ((bit1) / (bit2))))
+#endif
+
 #ifdef CONFIG_NUMA
 
 /*

@@ -2174,6 +2174,11 @@ alloc_pages_vma(gfp_t gfp, int order, struct vm_area_struct *vma,
 	int preferred_nid;
 	nodemask_t *nmask;
 
+#ifdef CONFIG_ENERGY_EFFICIENT_MEMORY
+	//Sets __GFP_COLD flag if VM_COLD flag is set in the vm_flags of the vma.
+	gfp |= _calc_vm_trans(vma->vm_flags, VM_COLD, __GFP_COLD);
+#endif
+
 	pol = get_vma_policy(vma, addr);
 
 	if (pol->mode == MPOL_INTERLEAVE) {
