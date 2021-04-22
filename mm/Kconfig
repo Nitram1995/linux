@@ -881,4 +881,10 @@ config ENERGY_EFFICIENT_MEMORY
     help
       Save energy
 
+config NON_STRICT_EEM
+    bool "System may allocate hot memory in cold zone from energy efficient memory under high memory pressure in the normal/hot zone."
+    default y
+    help
+      Less strict separation between hot and cold zones
+
 endmenu
