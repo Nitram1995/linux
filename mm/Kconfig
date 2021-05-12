@@ -876,15 +876,21 @@ config KMAP_LOCAL
 	bool
 
 config ENERGY_EFFICIENT_MEMORY
-    bool "Select to get energy efficiency"
+	bool "Add cold zone for allocation of infrequently used data."
     default y
     help
-      Save energy
+	  Enabling this allows allocation to 'Cold Zone' in memory. Grouping 
+	  infrequently accessed data in this zone leads to lower energy
+	  consumption in memory, as this data is allocated physically close
+	  together. Entire memory ranks or DIMMs that only store this data can
+	  spend more time in the energy efficient low power states.
 
 config NON_STRICT_EEM
-    bool "System may allocate hot memory in cold zone from energy efficient memory under high memory pressure in the normal/hot zone."
+	bool "Allow overflowing hot data to the cold zone."
     default y
     help
-      Less strict separation between hot and cold zones
+	  System may allocate hot memory in cold zone from energy efficient
+	  memory under high memory pressure in the normal/hot zone. This 
+	  prevents poor performance when the cold zone is not utilised.
 
 endmenu
