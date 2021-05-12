@@ -1009,6 +1009,8 @@ void __init zone_sizes_init(void)
 		max_zone_pfns[ZONE_HIGHMEM]	= max_zone_pfns[ZONE_NORMAL]
 	#endif
 	max_zone_pfns[ZONE_COLD] 	= max_low_pfn;
+
+	printk("EEL: CONFIG_MAX_NORMAL_PFN_SIZE: %u\n", CONFIG_MAX_NORMAL_PFN_SIZE);
 #else
 	max_zone_pfns[ZONE_NORMAL]	= max_low_pfn;
 	#ifdef CONFIG_HIGHMEM
