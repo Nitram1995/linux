@@ -894,11 +894,11 @@ config NON_STRICT_EEM
 	  prevents poor performance when the cold zone is not utilised.
 
 config MAX_NORMAL_PFN_SIZE
-	int "Normal zone max page frame number in as power of 2"
+	int "Normal zone max page frame number as power of 2"
 	default 33
 	help
-	  Determines the address that seperates the hot and the cold zone. The
+	  Determines the address that separates the hot and the cold zone. The
 	  number represents a power of two. I.e. the default of 33 translates
-	  to a seperating address at 2^33, which is 8GB.
+	  to a separating address at 2^33, which is 8GB.
 	
 endmenu
