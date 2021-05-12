@@ -277,7 +277,7 @@ int sysctl_lowmem_reserve_ratio[MAX_NR_ZONES] = {
 #endif
 	[ZONE_MOVABLE] = 0,
 #ifdef CONFIG_ENERGY_EFFICIENT_MEMORY
-	[ZONE_COLD] = 32,
+	[ZONE_COLD] = 0,
 #endif
 };
 
