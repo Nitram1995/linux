@@ -86,7 +86,7 @@
 
 /* Zone for frozen page */
 #ifdef CONFIG_ENERGY_EFFICIENT_MEMORY
-#define MAX_NORMAL_PFN ((1UL << (CONFIG_MAX_NORMAL_PFN_SIZE - PAGE_SHIFT)))
+#define MAX_NORMAL_PFN ((unsigned long)CONFIG_MAX_NORMAL_SIZE << (30 - PAGE_SHIFT))
 #endif
 
 /* 8237 DMA controllers */

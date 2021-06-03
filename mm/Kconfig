@@ -884,6 +884,8 @@ config ENERGY_EFFICIENT_MEMORY
 	  consumption in memory, as this data is allocated physically close
 	  together. Entire memory ranks or DIMMs that only store this data can
 	  spend more time in the energy efficient low power states.
+	  To take advantage of this, memory interleaving must be disabled on 
+	  the DIMMs or ranks that are used in the cold zone.
 
 config NON_STRICT_EEM
 	bool "Allow overflowing hot data to the cold zone."
@@ -893,12 +895,10 @@ config NON_STRICT_EEM
 	  memory under high memory pressure in the normal/hot zone. This 
 	  prevents poor performance when the cold zone is not utilised.
 
-config MAX_NORMAL_PFN_SIZE
-	int "Normal zone max page frame number as power of 2"
-	default 33
+config MAX_NORMAL_SIZE
+	int "Normal zone max size as GiB"
+	default 8
 	help
-	  Determines the address that separates the hot and the cold zone. The
-	  number represents a power of two. I.e. the default of 33 translates
-	  to a separating address at 2^33, which is 8GB.
+	  Determines the address that separates the hot and the cold zone
 	
 endmenu
