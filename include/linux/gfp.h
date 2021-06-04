@@ -456,7 +456,6 @@ static inline enum zone_type gfp_zone(gfp_t flags)
 	enum zone_type z;
 	int bit = (__force int) (flags & GFP_ZONEMASK);
 	
-	/* TODO EEL: Make generic */
 	#ifdef CONFIG_ENERGY_EFFICIENT_MEMORY
 	if(flags & __GFP_COLD)
 	{
