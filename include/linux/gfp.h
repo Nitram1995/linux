@@ -410,9 +410,10 @@ static inline bool gfpflags_normal_context(const gfp_t gfp_flags)
  * GFP_ZONES_SHIFT must be <= 2 on 32 bit platforms.
  */
 
-/* Ensures that there are no errors. The "|| CONFIG_ENERGY_EFFICIENT_MEMORY"
-	can be removed once the cold zone is properly added to GFP_ZONE_TABLE. */
-#if defined(CONFIG_ZONE_DEVICE) && (MAX_NR_ZONES-1) <= 4 || CONFIG_ENERGY_EFFICIENT_MEMORY
+/* CONFIG_ENERGY_EFFICIENT_MEMORY is excluded from GFP_ZONE_TABLE. 
+ * Therefore it should not influence GFP_ZONE_SHIFT */
+#if defined(CONFIG_ZONE_DEVICE) && (MAX_NR_ZONES-1) <= 4 \
+	|| (defined(CONFIG_ENERGY_EFFICIENT_MEMORY) && (MAX_NR_ZONES-2) <= 4)
 /* ZONE_DEVICE is not a valid GFP zone specifier */
 #define GFP_ZONES_SHIFT 2
 #else
