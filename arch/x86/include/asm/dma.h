@@ -84,7 +84,8 @@
 #define MAX_DMA_ADDRESS ((unsigned long)__va(MAX_DMA_PFN << PAGE_SHIFT))
 #endif
 
-/* Zone for frozen page */
+/* Limit for normal zone size in page frames.
+ * Necessary to allow memory for cold zone */
 #ifdef CONFIG_ENERGY_EFFICIENT_MEMORY
 #define MAX_NORMAL_PFN ((unsigned long)CONFIG_MAX_NORMAL_SIZE << (30 - PAGE_SHIFT))
 #endif

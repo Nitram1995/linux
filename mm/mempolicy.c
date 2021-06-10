@@ -99,6 +99,7 @@
 #include <linux/mmu_notifier.h>
 #include <linux/printk.h>
 #include <linux/swapops.h>
+#include <linux/mman.h>
 
 #include <asm/tlbflush.h>
 #include <linux/uaccess.h>
