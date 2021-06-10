@@ -154,6 +154,9 @@ calc_vm_flag_bits(unsigned long flags)
 	       _calc_vm_trans(flags, MAP_DENYWRITE,  VM_DENYWRITE ) |
 	       _calc_vm_trans(flags, MAP_LOCKED,     VM_LOCKED    ) |
 	       _calc_vm_trans(flags, MAP_SYNC,	     VM_SYNC      ) |
+#ifdef CONFIG_ENERGY_EFFICIENT_MEMORY
+	       _calc_vm_trans(flags, MAP_COLD,	     VM_COLD      ) |
+#endif
 	       arch_calc_vm_flag_bits(flags);
 }
 

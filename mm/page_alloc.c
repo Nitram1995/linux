@@ -276,6 +276,9 @@ int sysctl_lowmem_reserve_ratio[MAX_NR_ZONES] = {
 	[ZONE_HIGHMEM] = 0,
 #endif
 	[ZONE_MOVABLE] = 0,
+#ifdef CONFIG_ENERGY_EFFICIENT_MEMORY
+	[ZONE_COLD] = 0,
+#endif
 };
 
 static char * const zone_names[MAX_NR_ZONES] = {
@@ -292,6 +295,9 @@ static char * const zone_names[MAX_NR_ZONES] = {
 	 "Movable",
 #ifdef CONFIG_ZONE_DEVICE
 	 "Device",
+#endif
+#ifdef CONFIG_ENERGY_EFFICIENT_MEMORY
+	 "Cold",
 #endif
 };
 
@@ -4768,6 +4774,36 @@ retry_cpuset:
 	}
 
 retry:
+#if defined(CONFIG_ENERGY_EFFICIENT_MEMORY) && defined(CONFIG_NON_STRICT_EEM)
+	if(ac->highest_zoneidx >= ZONE_NORMAL && ac->highest_zoneidx < ZONE_COLD){
+		/* Attempt reclaiming page cache, then retry */
+		int ret;
+		ret = node_reclaim(ac->preferred_zoneref->zone->zone_pgdat, gfp_mask, order);
+		switch(ret) {
+			case NODE_RECLAIM_NOSCAN:
+			case NODE_RECLAIM_FULL:
+				break;
+			default:
+				page = get_page_from_freelist(gfp_mask, order, alloc_flags, ac);
+				if (page){
+					goto got_pg;
+				}
+		}
+
+		/* Attempt with cold zone used as regular zone */
+		enum zone_type oldzone = ac->highest_zoneidx;
+		ac->highest_zoneidx = ZONE_COLD;
+		ac->preferred_zoneref = first_zones_zonelist(ac->zonelist, ac->highest_zoneidx, ac->nodemask);
+		page = get_page_from_freelist(gfp_mask, order, alloc_flags, ac);
+		if (page){
+			goto got_pg;
+		}
+		/* If cold zone failed, reinstate preferred zone */
+		ac->highest_zoneidx = oldzone;
+		ac->preferred_zoneref = first_zones_zonelist(ac->zonelist, ac->highest_zoneidx, ac->nodemask);
+	}
+#endif
+
 	/* Ensure kswapd doesn't accidentally go to sleep as long as we loop */
 	if (alloc_flags & ALLOC_KSWAPD)
 		wake_all_kswapds(order, gfp_mask, ac);
