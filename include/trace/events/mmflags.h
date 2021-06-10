@@ -234,19 +234,22 @@ IF_HAVE_VM_SOFTDIRTY(VM_SOFTDIRTY,	"softdirty"	)		\
 #define IFDEF_ZONE_HIGHMEM(X)
 #endif
 
-#ifdef CONFIG_ENERGY_EFFICIENT_MEMORY
-#define IFDEF_ZONE_COLD(X) X
-#else
-#define IFDEF_ZONE_COLD(X)
-#endif
-
-#define ZONE_TYPE						\
+#define ZONE_TYPE_BASE						\
 	IFDEF_ZONE_DMA(		EM (ZONE_DMA,	 "DMA"))	\
 	IFDEF_ZONE_DMA32(	EM (ZONE_DMA32,	 "DMA32"))	\
 				EM (ZONE_NORMAL, "Normal")	\
-	IFDEF_ZONE_HIGHMEM(	EM (ZONE_HIGHMEM,"HighMem"))	\
+	IFDEF_ZONE_HIGHMEM(	EM (ZONE_HIGHMEM,"HighMem"))
+
+#ifdef CONFIG_ENERGY_EFFICIENT_MEMORY
+#define ZONE_TYPE                                               \
+	ZONE_TYPE_BASE 						\
 				EM (ZONE_MOVABLE,"Movable")	\
-	IFDEF_ZONE_COLD( 	EMe(ZONE_COLD,"Cold"))
+				EMe(ZONE_COLD,"Cold")
+#else
+#define ZONE_TYPE						\
+	ZONE_TYPE_BASE 						\
+				EMe(ZONE_MOVABLE,"Movable")
+#endif
 
 #define LRU_NAMES		\
 		EM (LRU_INACTIVE_ANON, "inactive_anon") \
